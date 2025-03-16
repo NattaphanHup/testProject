@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click the Dot Game</title>
+    <title>Moving Dot Game</title>
     <style>
         .dot {
             height: 25px;
@@ -25,24 +25,35 @@
         html,
         body {
             height: 100%;
+            margin: 0;
+        }
+
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 
-<body style="border: 1px solid red;">
+<body>
     <div class="container">
         <div id="dot" class="dot"></div>
-        <div><button onclick="document.getElementById('position').innerHTML = moveDot()">test position</button></div>
-        <div id="position"></div>
+        <div id="score">Score: 0</div>
     </div>
 
-
     <script>
+        let score = 0;
+
         const getRandom = (max, min) => Math.floor(Math.random() * (max - min + 1) + min);
 
         const dot = document.getElementById("dot");
-        const container = document.querySelector("body");
+        const container = document.querySelector(".container");
+        const scoreDisplay = document.getElementById("score");
 
+        // Move the dot to a random position
         const moveDot = () => {
             const maxX = container.clientWidth - dot.clientWidth;
             const maxY = container.clientHeight - dot.clientHeight;
@@ -50,7 +61,17 @@
             dot.style.top = getRandom(0, maxY) + "px";
         };
 
-        dot.addEventListener("click", moveDot);
+        // Set interval to move the dot every 1 second
+        setInterval(() => {
+            moveDot();
+        }, 2000);
+
+        // Optionally, we could add score increment on dot movement (or any other condition)
+        dot.addEventListener("click", () => {
+            score++;
+            scoreDisplay.innerText = `Score: ${score}`;
+        });
+
     </script>
 </body>
 
